@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next"
 import type { Metadata } from "next";
 import './globals.css';
 
@@ -15,6 +16,7 @@ export default function AppLayout({
     <html lang="en">
       <body style={{ width: '100%' }}>
         {children}
+        <Analytics />
       </body>
     </html>
   );
