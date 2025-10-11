@@ -24,9 +24,11 @@ export function dashedBorder(
 
   // Apply border width to appropriate sides
   borderSides[side].forEach((borderSide) => {
-    style[borderSide as keyof CSSProperties] = `${width}px solid transparent` as any
+    if (borderSide === "borderTop" || borderSide === "borderBottom" || 
+        borderSide === "borderLeft" || borderSide === "borderRight") {
+      style[borderSide] = `${width}px solid transparent`
+    }
   })
 
   return style
 }
-
