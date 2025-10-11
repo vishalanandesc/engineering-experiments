@@ -1,11 +1,15 @@
 "use client"
 
+import { cn } from "./lib/utils"
+import { dashedBorder } from "./components/dashed-border" 
+
+
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-start h-screen max-w-[720px] mx-auto border-x border-dashed">
-      <div className="flex w-full h-[120px] border-b border-dashed"> </div>
+    <main className="flex flex-col items-center justify-center h-screen max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
+      <div className="flex w-full h-[120px]" style={dashedBorder("b", "#CBCBCB", 1)}> </div>
       <div className="relative w-full"> 
-       <div className="flex p-6 justify-between items-center border-b border-dashed">
+       <div className="flex p-6 justify-between items-center" style={dashedBorder("b", "#CBCBCB", 1)}>
          <p className="text-base text-secondary font-medium">ENGINEERING EXPERIMENTS</p>
          <p className="text-sm text-secondary font-medium">VISHAL ANAND</p>
        </div>
@@ -18,7 +22,7 @@ export default function Home() {
        <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2 h-2 bg-accent" />
      </div> 
 
-     <div className="w-full px-6 py-8 flex flex-col gap-6 border-b border-dashed"> 
+     <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
         <div className="flex w-full p-1.5 border border-[#ECECEC] bg-[#FAFAFA] h-[420px] rounded-[20px]">
             <div className="flex w-full items-center justify-center bg-white border border-[#ECECEC] rounded-[14px]">
                 this is canvas area
