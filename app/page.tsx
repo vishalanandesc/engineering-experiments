@@ -5,19 +5,22 @@ import { dashedBorder } from './components/website-components/dashed-border';
 import Header from './components/website-components/header';
 import ComponentDetails from './components/website-components/component-details';
 import CanvasArea from './components/website-components/canvas-area';
+import Dropdown from './components/dropdown';
 
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
-      <div className="flex w-full h-[120px]" style={dashedBorder("b", "#CBCBCB", 1)}> </div>
-      <Header 
+    <main className="flex flex-col items-center justify-center max-w-[720px] h-screen mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
+       <Header 
           title="ENGINEERING EXPERIMENTS" 
           author="VISHAL ANAND" 
         />
 
      <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
-       <CanvasArea/>
+       <CanvasArea>
+         <Dropdown width="400px"/>
+       </CanvasArea>
+
        <ComponentDetails 
         title="Custom Dropdown" 
         description="A dropdown menu that animates the trigger based on the position of the dropdown."

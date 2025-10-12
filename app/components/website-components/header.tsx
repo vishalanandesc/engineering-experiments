@@ -8,8 +8,8 @@ interface HeaderProps {
 
 export default function Header({ title, author }: HeaderProps) {
   return (
-    <div className="relative w-full">
-      <div className="flex p-6 justify-between items-center border-b border-dashed" style={dashedBorder("b", "#CBCBCB", 1)}>
+    <div className="relative w-full mt-[120px]">
+      <div className="flex p-6 justify-between items-center border-b border-dashed" style={dashedBorder("y", "#CBCBCB", 1)}>
         <h1 className="text-base text-primary font-medium">
           {title}
         </h1>
