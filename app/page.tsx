@@ -23,7 +23,7 @@ export default function Home() {
 
        <ComponentDetails 
         title="Custom Dropdown" 
-        description="A dropdown menu that animates the trigger based on the position of the dropdown."
+        description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
         />
      </div>  
 

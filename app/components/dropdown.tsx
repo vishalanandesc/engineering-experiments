@@ -53,7 +53,7 @@ const files: FileItem[] = [
   {
     id: 'f4',
     name: 'demo.mp4',
-    path: 'assets/demo.mp4',
+    path: 'project/assets/demo.mp4',
     extension: 'mp4'
   },
   {
@@ -107,6 +107,22 @@ export default function FileDropdown({
 
   const SelectedIcon = getFileIcon(selectedFile.extension);
 
+  // Track previous index
+  const prevIndex = useRef<number>(0); // first file by default
+  const [direction, setDirection] = useState<"up" | "down">("down");
+
+  // Update direction when selectedFile changes
+  useEffect(() => {
+    const currentIndex = files.findIndex(f => f.id === selectedFile.id);
+    if (currentIndex < prevIndex.current) {
+      setDirection("down");
+    } else {
+      setDirection("up");
+    }
+    prevIndex.current = currentIndex; // update after computing direction
+   }, [selectedFile]);
+
+
   return (
     <div 
       className={`relative ${className}`}
@@ -125,9 +141,9 @@ export default function FileDropdown({
             <AnimatePresence mode="popLayout">
               <motion.p
                 key={selectedFile.path}
-                initial={{opacity: 0 }}
-                animate={{opacity: 1 }}
-                exit={{opacity: 0 }}
+                initial={{y: direction === "down" ? 15 : -15, opacity: 0 }}
+                animate={{y: 0, opacity: 1 }}
+                exit={{y: direction === "down" ? -15 : 15, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 500, damping: 35 }}
 
                 className="text-sm text-primary font-medium tracking-normal truncate"
@@ -200,7 +216,7 @@ export default function FileDropdown({
                       ${file.id === files[files.length - 1].id ? '' : 'border-[0.5px] border-[#EEEEEE]'}
                     `}
                     
-                    whileTap={{ scale: 1}}
+                    whileTap={{ scale: 1.02}}
                     
                   >
                     <IconComponent 
