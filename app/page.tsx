@@ -10,7 +10,7 @@ import Dropdown from './components/dropdown';
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center max-w-[720px] h-screen mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
+    <main className="flex flex-col items-center justify-center max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
        <Header 
           title="ENGINEERING EXPERIMENTS" 
           author="VISHAL ANAND" 
@@ -27,6 +27,7 @@ export default function Home() {
         />
      </div>  
 
+  
      
 
     </main>

@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown, File, Check } from 'lucide-react';
+import { ChevronDown, FileText, File, Image, Video, Music, Archive, Code, Check} from 'lucide-react';
 
 interface FileItem {
   id: string;
   name: string;
   path: string;
+  extension?: string;
 }
 
 interface FileDropdownProps {
@@ -14,42 +15,63 @@ interface FileDropdownProps {
   className?: string;
 }
 
+const getFileIcon = (extension?: string) => {
+    if (!extension) return File;
+    
+    const ext = extension.toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'].includes(ext)) return Image;
+    if (['mp4', 'avi', 'mov', 'wmv', 'flv'].includes(ext)) return Video;
+    if (['mp3', 'wav', 'flac', 'aac'].includes(ext)) return Music;
+    if (['zip', 'rar', '7z', 'tar', 'gz'].includes(ext)) return Archive;
+    if (['js', 'ts', 'jsx', 'tsx', 'py', 'java', 'cpp', 'html', 'css'].includes(ext)) return Code;
+    if (['md', 'txt', 'doc', 'docx', 'pdf'].includes(ext)) return FileText;
+    
+    return File;
+  };
+
 // Mock data
 const files: FileItem[] = [
   {
     id: 'f1',
     name: 'TestAccountSetup.md',
     path: 'sfdx-project/docs/TestAccountSetup.md',
+    extension: 'md'
   },
   {
     id: 'f2',
-    name: 'UserGuide.pdf',
-    path: 'UserGuide.pdf',
+    name: 'logo.png',
+    path: 'assets/images/logo.png',
+    extension: 'png' 
   },
   {
     id: 'f3',
     name: 'config.json',
-    path: 'sfdx-project/config/config.json',
+    path: 'sfdx-project/config/config.js',
+    extension: 'js'
   },
   {
     id: 'f4',
-    name: 'main.js',
-    path: 'sfdx-project/src/main.js',
+    name: 'demo.mp4',
+    path: 'assets/demo.mp4',
+    extension: 'mp4'
   },
   {
     id: 'f5',
     name: 'styles.css',
-    path: 'sfdx-project/assets/styles.css',
+    path: 'sfdx-project/styles.css',
+    extension: 'css'
   },
   {
     id: 'f6',
-    name: 'logo.png',
-    path: 'sfdx-project/assets/images/logo.png',
+    name: 'UserGuide.zip',
+    path: 'UserGuide.zip',
+    extension: 'zip'
   },
   {
     id: 'f7',
     name: 'README.md',
     path: 'sfdx-project/README.md',
+    extension: 'md'
   }
 ];
 
@@ -82,6 +104,8 @@ export default function FileDropdown({
     setIsOpen(!isOpen);
   };
 
+  const SelectedIcon = getFileIcon(selectedFile.extension);
+
   return (
     <div 
       className={`relative ${className}`}
@@ -94,7 +118,7 @@ export default function FileDropdown({
         className="flex w-full items-center justify-between gap-3 p-3 bg-white border border-[#E4E4E4] rounded-xl cursor-pointer hover:bg-[#FAFAFA] transition-colors"
       >
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          <File size={16} color="#7A7A82" className="flex-shrink-0" />
+          <SelectedIcon size={16} color="#7A7A82" className="flex-shrink-0" />
           <p className="text-sm text-primary font-medium truncate">
             {selectedFile.path}
           </p>
@@ -102,7 +126,6 @@ export default function FileDropdown({
         <ChevronDown 
           size={20} 
           color="#7A7A82" 
-          className={`flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
 
@@ -111,6 +134,7 @@ export default function FileDropdown({
         <div className="absolute z-50 w-full mt-2 bg-white border border-[#E4E4E4] rounded-xl shadow-lg max-h-60 overflow-hidden">
           <div className="overflow-y-auto max-h-60">
             {files.map((file, index) => {
+              const IconComponent = getFileIcon(file.extension);
               const isSelected = selectedFile.id === file.id;
       
               return (
@@ -124,7 +148,7 @@ export default function FileDropdown({
                     ${index !== files.length - 1 ? 'border-b border-[#EEEEEE]' : ''}
                   `}
                 >
-                  <File 
+                  <IconComponent
                     size={16} 
                     color="#7A7A82"
                     className="flex-shrink-0"
