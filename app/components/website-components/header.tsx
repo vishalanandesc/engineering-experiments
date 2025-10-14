@@ -1,5 +1,5 @@
 import React from 'react';
-import { dashedBorder } from '../website-components/dashed-border';
+import { dashedBorder } from './dashed-border';
 
 interface HeaderProps {
   title: string;

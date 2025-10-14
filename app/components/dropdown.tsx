@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, FileText, File, Image, Video, Music, Archive, Code, Check} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface FileItem {
   id: string;
@@ -115,58 +116,116 @@ export default function FileDropdown({
       {/* Dropdown Trigger */}
       <button 
         onClick={toggleDropdown}
-        className="flex w-full items-center justify-between gap-3 p-3 bg-white border border-[#E4E4E4] rounded-xl cursor-pointer hover:bg-[#FAFAFA] transition-colors"
+        className="flex w-full items-center gap-2 p-3 bg-white border border-[#E4E4E4] rounded-xl cursor-pointer hover:bg-[#FAFAFA] transition-colors"
       >
         <div className="flex items-center gap-2 flex-1 min-w-0">
-          <SelectedIcon size={16} color="#7A7A82" className="flex-shrink-0" />
-          <p className="text-sm text-primary font-medium truncate">
-            {selectedFile.path}
-          </p>
+          <SelectedIcon size={16} color="var(--secondary)" className="flex-shrink-0" />
+
+          <motion.div className="min-w-0">
+            <AnimatePresence mode="popLayout">
+              <motion.p
+                key={selectedFile.path}
+                initial={{opacity: 0 }}
+                animate={{opacity: 1 }}
+                exit={{opacity: 0 }}
+                transition={{ type: "spring", stiffness: 500, damping: 35 }}
+
+                className="text-sm text-primary font-medium tracking-normal truncate"
+              >
+                {selectedFile.path}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
+          
         </div>
         <ChevronDown 
           size={20} 
-          color="#7A7A82" 
+          color="var(--secondary)" 
         />
       </button>
 
       {/* Dropdown Menu */}
-      {isOpen && (
-        <div className="absolute z-50 w-full mt-2 bg-white border border-[#E4E4E4] rounded-xl shadow-lg max-h-60 overflow-hidden">
-          <div className="overflow-y-auto max-h-60">
-            {files.map((file, index) => {
-              const IconComponent = getFileIcon(file.extension);
-              const isSelected = selectedFile.id === file.id;
-      
-              return (
-                <div
-                  key={file.id}
-                  onClick={() => handleFileSelect(file)}
-                  className={`
-                    flex items-center gap-2 p-3 cursor-pointer transition-colors
-                    hover:bg-[#FAFAFA]
-                    ${isSelected ? 'bg-[#F5F5F5]' : ''}
-                    ${index !== files.length - 1 ? 'border-b border-[#EEEEEE]' : ''}
-                  `}
-                >
-                  <IconComponent
-                    size={16} 
-                    color="#7A7A82"
-                    className="flex-shrink-0"
-                  />
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ 
+              opacity: 0, 
+              y: -10, 
+              scale: 0.95 
+            }}
+            animate={{ 
+              opacity: 1, 
+              y: 0, 
+              scale: 1 
+            }}
+            exit={{ 
+              opacity: 0, 
+              y: -10, 
+              scale: 0.95 
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 500,
+              damping: 30,
+              mass: 0.8
+            }}
+            className="absolute z-50 w-full mt-2 bg-white border border-[#E4E4E4] rounded-xl shadow-lg max-h-60 overflow-hidden"
+          >
+            <div className="overflow-y-auto max-h-60">
+              {files.map((file, index) => {
+                const IconComponent = getFileIcon(file.extension);
+                const isSelected = selectedFile.id === file.id;
+        
+                return (
+                  <motion.div
+                    key={file.id}
+                    initial={{ 
+                      opacity: 0, 
+                      x: -20 
+                    }}
+                    animate={{ 
+                      opacity: 1, 
+                      x: 0 
+                    }}
+                    transition={{
+                      delay: index * 0.05, // Staggered animation
+                      duration: 0.3,
+                      ease: "easeOut"
+                    }}
+                    onClick={() => handleFileSelect(file)}
+                    className={`
+                      flex items-center gap-2 p-3 cursor-pointer transition-colors duration-300 ease-out
+                      hover:bg-[#FAFAFA]
+                      ${isSelected ? 'bg-[#F5F5F5]' : ''}
+                      ${file.id === files[files.length - 1].id ? '' : 'border-[0.5px] border-[#EEEEEE]'}
+                    `}
+                    
+                    whileTap={{ scale: 1}}
+                    
+                  >
+                    <IconComponent 
+                      size={16} 
+                      color="var(--secondary)" 
+                    />
 
-                  <p className="flex-1 text-sm truncate text-primary">
-                    {file.path}
-                  </p>
-      
-                  {isSelected && (
-                    <Check size={16} color="#323238" className="flex-shrink-0" />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm tracking-normal truncate text-primary]">
+                        {file.path}
+                      </p>
+                    </div>
+        
+                    {isSelected && (
+                      <motion.div>
+                        <Check size={16} color="var(--primary)"/>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
