@@ -181,11 +181,11 @@ export default function FileDropdown({
                     key={file.id}
                     initial={{ 
                       opacity: 0, 
-                      x: -20 
+                      y: -2
                     }}
                     animate={{ 
                       opacity: 1, 
-                      x: 0 
+                      y: 0 
                     }}
                     transition={{
                       delay: index * 0.05, // Staggered animation
