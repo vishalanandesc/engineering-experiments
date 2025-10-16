@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, FileText, File, Image, Video, Music, Archive, Code, Check} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface FileItem {
   id: string;
