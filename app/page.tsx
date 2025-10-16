@@ -6,6 +6,7 @@ import Header from './components/website-components/header';
 import ComponentDetails from './components/website-components/component-details';
 import CanvasArea from './components/website-components/canvas-area';
 import Dropdown from './components/dropdown';
+import ActionButton from './components/action-button';
 
 
 export default function Home() {
@@ -27,7 +28,16 @@ export default function Home() {
         />
      </div>  
 
-     
+     <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+       <CanvasArea>
+         <ActionButton/>
+       </CanvasArea>
+
+       <ComponentDetails 
+        title="Action Buttons" 
+        description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
+        />
+     </div> 
 
   
      
