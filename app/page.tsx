@@ -30,7 +30,7 @@ export default function Home() {
      </div>  
 
      <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
-       <CanvasArea isolation="isolation-container">
+       <CanvasArea showToaster={true}>
          <ActionButtons/>
        </CanvasArea>
 
