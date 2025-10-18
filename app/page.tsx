@@ -1,6 +1,7 @@
 "use client"
 import React from 'react';
 
+
 import { dashedBorder } from './components/website-components/dashed-border';
 import Header from './components/website-components/header';
 import ComponentDetails from './components/website-components/component-details';
@@ -29,7 +30,7 @@ export default function Home() {
      </div>  
 
      <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
-       <CanvasArea>
+       <CanvasArea isolation="isolation-container">
          <ActionButtons/>
        </CanvasArea>
 

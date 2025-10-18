@@ -2,6 +2,7 @@
 
 import { Check, Loader, SquareArrowOutUpRight } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 
 export default function ActionButtons() {
   const steps = [
@@ -129,6 +130,7 @@ export default function ActionButtons() {
       >
         <div className="relative flex items-center justify-end gap-3 rounded-2xl p-2">
           <button
+            onClick={() => toast('Ticket has been cancelled')}
             className="
               flex h-[36px] cursor-pointer items-center rounded-lg border border-[#ECECEC]
               bg-white px-4 text-sm font-medium leading-[100%] text-secondary
@@ -140,6 +142,7 @@ export default function ActionButtons() {
           </button>
 
           <button
+            onClick={() => toast.success('Deployment has been started')}
             className="
               group relative flex h-[36px] cursor-pointer items-center rounded-lg border-[0.5px]
               border-white/30 bg-[#A41AA7] px-4 text-sm font-medium leading-[100%] text-white
