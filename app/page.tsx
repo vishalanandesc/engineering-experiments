@@ -8,6 +8,7 @@ import ComponentDetails from './components/website-components/component-details'
 import CanvasArea from './components/website-components/canvas-area';
 import Dropdown from './components/dropdown';
 import ActionButtons from './components/action-buttons';
+import TabNav from './components/tab-nav';
 
 
 export default function Home() {
@@ -39,6 +40,17 @@ export default function Home() {
         description="Interactive action buttons built on top of layout animation via react motion."
         />
      </div> 
+
+     <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+       <CanvasArea>
+         <TabNav width="400px"/>
+       </CanvasArea>
+
+       <ComponentDetails 
+        title="Custom Dropdown" 
+        description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
+        />
+     </div>  
 
   
      
