@@ -10,7 +10,6 @@ interface TabNavProps {
 
 export default function TabNav({ width = '100%', className = '' }: TabNavProps) {
   const [activeTab, setActiveTab] = useState("details");
-
   const tabs = [
       { id: "details", label: "Ticket Details" },
       { id: "plan", label: "Execution Plan" },
@@ -22,9 +21,9 @@ export default function TabNav({ width = '100%', className = '' }: TabNavProps) 
       className={`relative bg-white flex flex-col rounded-md border border-[#E4E4E4] overflow-hidden ${className}`}
       style={{ width }}>
       <div className="flex justify-between items-center px-4 py-3 bg-[#FAFAFA] border-b border-[#E4E4E4]">
-        <p className="text-base text-[#323238] font-medium tracking-normal">TCK-847193</p>
+        <p className="text-base text-primary font-medium tracking-normal">TCK-847193</p>
         <div className="cursor-pointer">
-          <X size={18} color="#7A7A82" />
+          <X size={18} color="var(--secondary)"/>
         </div>
       </div>
 
@@ -32,8 +31,8 @@ export default function TabNav({ width = '100%', className = '' }: TabNavProps) 
                 {tabs.map((tab) => (
                     <motion.button
                         key={tab.id}
-                        className={`relative flex py-2 px-1 cursor-pointer h-[34px] text-[14px] font-medium transition-colors duration-200 ${
-                            activeTab === tab.id ? "text-[#1D4ED8]" : "text-[#7A7A82] hover:text-[#323238]"
+                        className={`relative flex py-2 px-1 cursor-pointer h-[34px] text-sm font-medium transition-colors duration-200 ${
+                            activeTab === tab.id ? "text-[#1D4ED8]" : "text-secondary hover:text-primary"
                         }`}
                         onClick={() => setActiveTab(tab.id)}>
                         {tab.label}

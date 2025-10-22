@@ -77,7 +77,7 @@ export default function ActionButtons() {
               onClick={() => setIsOpen(true)}
               whileHover={{ scale: 1 }}
               whileTap={{ scale: 0.95 }}
-              className="relative flex cursor-pointer items-center justify-center rounded-full border-[0.5px]
+              className="relative flex cursor-pointer items-center justify-center rounded-xl border-[0.5px]
               border-white/30 bg-[#A41AA7] px-6 py-4 text-xl font-medium leading-[100%] text-white
               shadow-[-2px_4px_4px_0_rgba(255,255,255,0.25)_inset,_0_0_0_1px_#A41AA7]
               overflow-hidden transition-all duration-150 ease-out

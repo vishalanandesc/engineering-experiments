@@ -43,11 +43,11 @@ export default function Home() {
 
      <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
        <CanvasArea>
-         <TabNav width="400px"/>
+         <TabNav width="440px"/>
        </CanvasArea>
 
        <ComponentDetails 
-        title="Custom Dropdown" 
+        title="Clip Path Tabs" 
         description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
         />
      </div>  
