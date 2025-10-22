@@ -13,21 +13,21 @@ export default function ActionButtons() {
       id: 1,
       title: 'Query Analyzed',
       description: 'The query was analyzed by the agent.',
-      timestamp: '8/14/2025 15:30:06',
+      timestamp: '18/10/2025 15:30:06',
       completed: true,
     },
     {
       id: 2,
       title: 'Plan Created',
       description: 'An execution plan has been generated.',
-      timestamp: '8/14/2025 15:34:12',
+      timestamp: '18/10/2025 15:34:12',
       completed: true,
     },
     {
       id: 3,
       title: 'Plan Executed',
       description: 'All actions in the plan have been executed.',
-      timestamp: '8/14/2025 15:36:26',
+      timestamp: '18/10/2025 15:36:26',
       completed: true,
     },
     {
@@ -43,24 +43,25 @@ export default function ActionButtons() {
     <>
      <button
         onClick={() => setIsOpen(false)}
-        className="absolute top-4 right-4 p-2 rounded-lg border border-gray-200 bg-white cursor-pointer hover:bg-gray-50 transition-colors">
+        className="absolute top-6 right-6 p-2 rounded-lg border border-gray-200 bg-white cursor-pointer 
+        hover:bg-[#FAFAFA] transition-colors">
         <RefreshCcw className="w-4 h-4" />
       </button>
 
       <AnimatePresence mode="popLayout">
       <motion.div
           layout
-          initial={{ opacity: 0, scale: 0.8, borderRadius: '0.5rem' }}
-          animate={{ opacity: 1, scale: 1, borderRadius: '1.25rem' }}
-          exit={{ opacity: 0, scale: 0.8, borderRadius: '0.5rem' }}
+          initial={{ opacity: 0, scale: 0.8, borderRadius: '0', borderWidth: isOpen ? '1px' : '0px' }}
+          animate={{ opacity: 1, scale: 1, borderRadius: isOpen ? '1.25rem' : '1.25rem', borderWidth: isOpen ? '1px' : '0px' }}
+          exit={{ opacity: 0, scale: 0.8, borderRadius: '0', borderWidth: isOpen ? '1px' : '0px', }}
           transition={{
-            duration: 0.5,
+            duration: 0.3,
             type: 'spring',
             stiffness: 300,
             damping: 30,
           }}
-          className="absolute right-36 bottom-54 flex max-w-[480px] flex-col items-center justify-center rounded-[20px] border border-[#ECECEC] bg-[#FAFAFA] p-1.5 shadow-[0_6px_18px_0_rgba(0,0,0,0.06)]"
-        >
+          className="absolute right-48 bottom-48 flex max-w-[480px] flex-col items-center justify-center rounded-[20px] border border-[#ECECEC] bg-[#FAFAFA] p-1.5 shadow-[0_6px_18px_0_rgba(0,0,0,0.04)]">
+
           {!isOpen ? (
             // Collapsed Button State
             <motion.button
@@ -74,11 +75,17 @@ export default function ActionButtons() {
                 opacity: { duration: 0.3, delay: 0.2 }
               }}
               onClick={() => setIsOpen(true)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="h-[52px] px-6 cursor-pointer rounded-xl bg-gradient-to-r from-[#A41AA7] to-[#8B158C] text-white font-medium text-base shadow-lg hover:shadow-xl transition-shadow"
-            >
-              Action Buttons
+              whileHover={{ scale: 1 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative flex cursor-pointer items-center justify-center rounded-full border-[0.5px]
+              border-white/30 bg-[#A41AA7] px-6 py-4 text-xl font-medium leading-[100%] text-white
+              shadow-[-2px_4px_4px_0_rgba(255,255,255,0.25)_inset,_0_0_0_1px_#A41AA7]
+              overflow-hidden transition-all duration-150 ease-out
+              before:absolute before:inset-0 before:rounded-[inherit]
+              before:bg-[linear-gradient(165deg,rgba(255,255,255,0.2)_30%,transparent_30%)]
+              before:content-[''] before:opacity-100 before:transition-opacity before:duration-300
+              hover:before:opacity-0">
+              Action Button
             </motion.button>
           ) : (
             // Expanded Timeline State
@@ -93,9 +100,7 @@ export default function ActionButtons() {
                 opacity: { duration: 0.3, delay: 0.2 },
               }}
               style={{ originX: 0.5, originY: 0.5 }}
-              className="w-full flex max-w-[480px] flex-col items-center justify-center
-                        rounded-[20px] border border-[#ECECEC] bg-[#FAFAFA] p-1.5
-                        shadow-[0_6px_18px_0_rgba(0,0,0,0.06)]">
+              className="w-full flex-col items-center justify-center">
       
         <div className="relative flex w-full flex-col gap-6 rounded-2xl border border-[#ECECEC] bg-white p-6">
         <p className="text-sm font-medium tracking-normal text-secondary">
@@ -207,14 +212,8 @@ export default function ActionButtons() {
               group relative flex h-[36px] cursor-pointer items-center rounded-lg border-[0.5px]
               border-white/30 bg-[#A41AA7] px-4 text-sm font-medium leading-[100%] text-white
               shadow-[-2px_4px_4px_0_rgba(255,255,255,0.25)_inset,_0_0_0_1px_#A41AA7]
-              overflow-hidden transition-all duration-150 ease-out
-              before:absolute before:inset-0 before:rounded-[inherit]
-              before:bg-[linear-gradient(170deg,rgba(255,255,255,0.2)_30%,transparent_30%)]
-              before:content-[''] before:opacity-100 before:transition-opacity before:duration-300
-              hover:before:opacity-0
-            "
-          >
-            <span className="relative z-10 transition-shadow duration-300">
+              overflow-hidden transition-all duration-150 ease-out">
+            <span className="relative z-10 group-hover:opacity-80 ransition-opacity duration-150 ease-out">
               Start deployment
             </span>
           </motion.button>

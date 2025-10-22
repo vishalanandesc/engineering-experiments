@@ -36,7 +36,7 @@ export default function Home() {
 
        <ComponentDetails 
         title="Action Buttons" 
-        description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
+        description="Interactive action buttons built on top of layout animation via react motion."
         />
      </div> 
 

@@ -10,7 +10,7 @@ export default function Header({ title, author }: HeaderProps) {
   return (
     <div className="relative w-full mt-[120px]">
       <div className="flex p-6 justify-between items-center border-b border-dashed" style={dashedBorder("y", "#CBCBCB", 1)}>
-        <h1 className="text-base text-primary font-medium">
+        <h1 className="text-sm text-primary font-medium">
           {title}
         </h1>
         <span className="text-sm text-secondary font-medium">{author}</span>
