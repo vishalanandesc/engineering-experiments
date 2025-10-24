@@ -13,7 +13,7 @@ import TabNav from './components/tab-nav';
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-center max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
+    <main className="relative w-full flex flex-col items-center justify-center max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
        <Header 
           title="ENGINEERING EXPERIMENTS" 
           author="VISHAL ANAND" 
