@@ -14,7 +14,7 @@ export default function AppLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{ width: '100%' }}>
+      <body className="w-full flex items-center px-4 md:px-0 mx-auto">
         {children}
         <Analytics />
       </body>

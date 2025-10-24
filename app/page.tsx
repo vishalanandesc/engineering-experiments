@@ -19,7 +19,7 @@ export default function Home() {
           author="VISHAL ANAND" 
         />
 
-     <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+     <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
        <CanvasArea overflow="visible">
          <Dropdown width="400px"/>
        </CanvasArea>
@@ -30,7 +30,7 @@ export default function Home() {
         />
      </div>  
 
-     <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+     <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
        <CanvasArea showToaster={true}>
          <ActionButtons/>
        </CanvasArea>
@@ -41,13 +41,13 @@ export default function Home() {
         />
      </div> 
 
-     <div className="w-full px-6 py-8 flex flex-col gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+     <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
        <CanvasArea>
          <TabNav width="440px"/>
        </CanvasArea>
 
        <ComponentDetails 
-        title="Clip Path Tabs" 
+        title="Clip-path Tabs" 
         description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
         />
      </div>  
