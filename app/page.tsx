@@ -48,7 +48,7 @@ export default function Home() {
 
        <ComponentDetails 
         title="Clip-path Tabs" 
-        description="A dropdown menu with dynamic file-type icons, beautified with tailwind & react motion."
+        description="Animating layout changes using react motion, styled with tailwind."
         />
      </div>  
 

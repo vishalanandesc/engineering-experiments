@@ -187,7 +187,7 @@ export default function FileDropdown({
             }}
             className="absolute z-50 w-full mt-2 bg-white border border-[#E4E4E4] rounded-xl shadow-lg max-h-60 overflow-hidden"
           >
-            <div className="overflow-y-auto max-h-60">
+            <div className="overscroll-contain custom-scrollbar overflow-y-auto max-h-60">
               {files.map((file, index) => {
                 const IconComponent = getFileIcon(file.extension);
                 const isSelected = selectedFile.id === file.id;

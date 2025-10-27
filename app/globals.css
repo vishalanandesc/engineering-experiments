@@ -121,6 +121,38 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ===== Scroll Fade Effect ===== */
+
+.scroller {
+  overflow-y: auto;
+  position: relative;
+
+  /* Fallback gradient fade */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 5%, black 100%);
+  mask-image: linear-gradient(to bottom, transparent, black 5%, black 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+
+
+@supports (animation-timeline: scroll(self)) {
+  .scroller {
+    animation: mask-up linear both;
+    animation-timeline: scroll(self);
+    animation-range: 0 1rem;
+  }
+
+  @keyframes mask-up {
+    to {
+      mask-size: 100% 120px, 100% 100%;
+    }
+  }
+}
+
+
 
 .custom-scrollbar {
   /* Firefox */
@@ -130,7 +162,7 @@
 
 /* Webkit browsers (Chrome, Safari, Edge) */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 3px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -145,6 +177,7 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(0, 0, 0, 0.3);
+  
 }
 
 
