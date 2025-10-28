@@ -1,5 +1,6 @@
 "use client"
 import React from 'react';
+import { motion, useInView } from 'motion/react';
 
 
 import { dashedBorder } from './components/website-components/dashed-border';
@@ -12,9 +13,11 @@ import TabNav from './components/tab-nav';
 
 
 export default function Home() {
+  
   return (
     <main className="relative w-full flex flex-col items-center justify-center max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
-       <Header 
+
+     <Header 
           title="ENGINEERING EXPERIMENTS" 
           author="VISHAL ANAND" 
         />
@@ -54,6 +57,7 @@ export default function Home() {
 
   
      
+    
 
     </main>
   );

@@ -155,9 +155,9 @@
 
 
 .custom-scrollbar {
-  /* Firefox */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */
@@ -197,4 +197,68 @@ body {
   background: var(--background);
   color: var(--foreground);
 
+}
+
+@utility fade {
+  --fade-top-length: 0px;
+  --fade-bottom-length: 0px;
+  --fade-left-length: 0px;
+  --fade-right-length: 0px;
+  --fade-top-opacity: 1;
+  --fade-bottom-opacity: 1;
+  --fade-left-opacity: 1;
+  --fade-right-opacity: 1;
+  
+  -webkit-mask-image: 
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,calc(1 - var(--fade-top-opacity))) 0,
+      black var(--fade-top-length),
+      black calc(100% - var(--fade-bottom-length)),
+      rgba(0,0,0,calc(1 - var(--fade-bottom-opacity))) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(0,0,0,calc(1 - var(--fade-left-opacity))) 0,
+      black var(--fade-left-length),
+      black calc(100% - var(--fade-right-length)),
+      rgba(0,0,0,calc(1 - var(--fade-right-opacity))) 100%
+    );
+  mask-image: 
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,calc(1 - var(--fade-top-opacity))) 0,
+      black var(--fade-top-length),
+      black calc(100% - var(--fade-bottom-length)),
+      rgba(0,0,0,calc(1 - var(--fade-bottom-opacity))) 100%
+    ),
+    linear-gradient(
+      to right,
+      rgba(0,0,0,calc(1 - var(--fade-left-opacity))) 0,
+      black var(--fade-left-length),
+      black calc(100% - var(--fade-right-length)),
+      rgba(0,0,0,calc(1 - var(--fade-right-opacity))) 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  mask-size: 100% 100%, 100% 100%;
+}
+
+@utility fade-top-* {
+  --fade-top-length: *;
+}
+
+@utility fade-bottom-* {
+  --fade-bottom-length: *;
+}
+
+@utility fade-left-* {
+  --fade-left-length: *;
+}
+
+@utility fade-right-* {
+  --fade-right-length: *;
 }

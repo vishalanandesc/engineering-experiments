@@ -35,7 +35,7 @@ export default function AppLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="scroller w-full flex items-center px-4 md:px-0 mx-auto">
+      <body className="w-full flex items-center px-4 md:px-0 mx-auto">
         {children}
         <Analytics />
       </body>

@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect} from 'react';
 import { ChevronDown, FileText, File, Image, Video, Music, Archive, Code, Check} from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useInView } from 'motion/react';
 
 interface FileItem {
   id: string;
@@ -122,6 +122,10 @@ export default function FileDropdown({
     prevIndex.current = currentIndex; // update after computing direction
    }, [selectedFile]);
 
+  const topRef = React.useRef<HTMLDivElement>(null);
+  const bottomRef = React.useRef<HTMLDivElement>(null);
+  const atTop = useInView(topRef, { initial: true });
+  const atBottom = useInView(bottomRef, { initial: false });
 
   return (
     <div 
@@ -172,7 +176,9 @@ export default function FileDropdown({
             animate={{ 
               opacity: 1, 
               y: 0, 
-              scale: 1 
+              scale: 1,
+              
+            
             }}
             exit={{ 
               opacity: 0, 
@@ -187,7 +193,14 @@ export default function FileDropdown({
             }}
             className="absolute z-50 w-full mt-2 bg-white border border-[#E4E4E4] rounded-xl shadow-lg max-h-60 overflow-hidden"
           >
-            <div className="overscroll-contain custom-scrollbar overflow-y-auto max-h-60">
+            <motion.div className="overscroll-contain custom-scrollbar overflow-y-auto max-h-60 fade fade-top-8 fade-bottom-8"
+            initial={false}
+            animate={{
+              '--fade-top-opacity': atTop ? 0 : 1,
+              '--fade-bottom-opacity': atBottom ? 0 : 1,
+            }}>
+              <div ref={topRef} />
+
               {files.map((file, index) => {
                 const IconComponent = getFileIcon(file.extension);
                 const isSelected = selectedFile.id === file.id;
@@ -201,7 +214,8 @@ export default function FileDropdown({
                     }}
                     animate={{ 
                       opacity: 1, 
-                      y: 0 
+                      y: 0,
+                      
                     }}
                     transition={{
                       delay: index * 0.05, // Staggered animation
@@ -238,7 +252,8 @@ export default function FileDropdown({
                   </motion.div>
                 );
               })}
-            </div>
+            <div ref={bottomRef} />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
