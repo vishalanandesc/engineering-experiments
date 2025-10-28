@@ -246,19 +246,3 @@ body {
   -webkit-mask-size: 100% 100%, 100% 100%;
   mask-size: 100% 100%, 100% 100%;
 }
-
-@utility fade-top-* {
-  --fade-top-length: *;
-}
-
-@utility fade-bottom-* {
-  --fade-bottom-length: *;
-}
-
-@utility fade-left-* {
-  --fade-left-length: *;
-}
-
-@utility fade-right-* {
-  --fade-right-length: *;
-}

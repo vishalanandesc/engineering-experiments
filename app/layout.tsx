@@ -16,7 +16,6 @@ export const metadata: Metadata = {
     title: "Engineering Experiments",
     description: "This project is a public documentaion of me experimenting with design engineering.",
     images: '/opengraph.png',
-    url: "https://engineering-experiments.vercel.app/"
   },
 
   twitter: {

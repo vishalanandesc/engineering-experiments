@@ -193,10 +193,12 @@ export default function FileDropdown({
             }}
             className="absolute z-50 w-full mt-2 bg-white border border-[#E4E4E4] rounded-xl shadow-lg max-h-60 overflow-hidden"
           >
-            <motion.div className="overscroll-contain custom-scrollbar overflow-y-auto max-h-60 fade fade-top-8 fade-bottom-8"
+            <motion.div className="overscroll-contain custom-scrollbar overflow-y-auto max-h-60 fade"
             initial={false}
             animate={{
-              '--fade-top-opacity': atTop ? 0 : 1,
+              '--fade-top-length': '2rem',
+              '--fade-bottom-length': '2.5rem',
+              '--fade-top-opacity': atTop ? 1 : 0,
               '--fade-bottom-opacity': atBottom ? 0 : 1,
             }}>
               <div ref={topRef} />
