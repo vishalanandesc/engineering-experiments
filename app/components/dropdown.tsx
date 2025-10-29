@@ -196,12 +196,10 @@ export default function FileDropdown({
             <motion.div className="overscroll-contain custom-scrollbar overflow-y-auto max-h-60 fade"
             initial={false}
             animate={{
-              '--fade-top-length': '2rem',
               '--fade-bottom-length': '2.5rem',
-              '--fade-top-opacity': atTop ? 1 : 0,
               '--fade-bottom-opacity': atBottom ? 0 : 1,
             }}>
-              <div ref={topRef} />
+            <div ref={topRef} />
 
               {files.map((file, index) => {
                 const IconComponent = getFileIcon(file.extension);

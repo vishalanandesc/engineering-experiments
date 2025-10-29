@@ -1,9 +1,8 @@
-"use client"
+'use client'
 import React from 'react';
-import { motion, useInView } from 'motion/react';
-
 
 import { dashedBorder } from './components/website-components/dashed-border';
+import Blur from './components/website-components/linear-blur';
 import Header from './components/website-components/header';
 import ComponentDetails from './components/website-components/component-details';
 import CanvasArea from './components/website-components/canvas-area';
@@ -12,11 +11,12 @@ import ActionButtons from './components/action-buttons';
 import TabNav from './components/tab-nav';
 
 
+
 export default function Home() {
   
   return (
     <main className="relative w-full flex flex-col items-center justify-center max-w-[720px] mx-auto" style={dashedBorder("x", "#CBCBCB", 1)}>
-
+     <Blur/>
      <Header 
           title="ENGINEERING EXPERIMENTS" 
           author="VISHAL ANAND" 
@@ -54,6 +54,8 @@ export default function Home() {
         description="Animating layout changes using react motion, styled with tailwind."
         />
      </div>  
+
+     
 
   
      
