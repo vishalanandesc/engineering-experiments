@@ -18,16 +18,16 @@ export default function TabNav({ width = '100%', className = '' }: TabNavProps) 
 
   return (
     <div 
-      className={`relative bg-white flex flex-col rounded-md border border-[#E4E4E4] overflow-hidden ${className}`}
+      className={`relative flex flex-col p-1.5 bg-[#FAFAFA] rounded-2xl border border-[#E4E4E4] overflow-hidden ${className}`}
       style={{ width }}>
-      <div className="flex justify-between items-center px-4 py-3 bg-[#FAFAFA] border-b border-[#E4E4E4]">
+      <div className="flex justify-between items-center px-4 py-3">
         <p className="text-base text-primary font-medium tracking-normal">TCK-847193</p>
-        <div className="cursor-pointer">
+        <div className="cursor-not-allowed">
           <X size={18} color="var(--secondary)"/>
         </div>
       </div>
 
-      <div className="flex items-center gap-4 px-4 mt-2 overflow-visible "> 
+      <div className="flex items-center gap-4 px-4 mt-2 h-[48px] overflow-visible bg-white border border-[#E4E4E4] rounded-[10px]"> 
                 {tabs.map((tab) => (
                     <motion.button
                         key={tab.id}
@@ -38,7 +38,7 @@ export default function TabNav({ width = '100%', className = '' }: TabNavProps) 
                         {tab.label}
                         {activeTab === tab.id && (
                             <motion.div
-                                className="absolute flex bottom-[-0.5px] left-0 right-0 h-[3px] bg-[#1D4ED8]"
+                                className="absolute flex bottom-[-5.5px] left-0 right-0 h-[3px] bg-[#1D4ED8]"
                                 layoutId="ActiveTab"
                                 transition={{
                                     type: "spring",
