@@ -9,6 +9,7 @@ import CanvasArea from './components/website-components/canvas-area';
 import Dropdown from './components/dropdown';
 import ActionButtons from './components/action-buttons';
 import TabNav from './components/tab-nav';
+import MusicPlayer from './components/music-player/player';
 
 
 
@@ -54,6 +55,17 @@ export default function Home() {
         description="Animating layout changes using react motion, styled with tailwind."
         />
      </div>  
+
+     <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+       <CanvasArea>
+         <MusicPlayer/>
+       </CanvasArea>
+
+       <ComponentDetails 
+        title="Music Player" 
+        description="A nice little desc."
+        />
+     </div> 
 
      
 
