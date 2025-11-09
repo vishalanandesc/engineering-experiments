@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence, useAnimationControls } from "motion/react"
-import { Play, Pause, SkipBack, SkipForward } from "lucide-react"
+import { Play, Pause, StepBack, StepForward, Shrink } from "lucide-react"
 import { Slider } from "@base-ui-components/react/slider"
 
 
@@ -192,14 +192,23 @@ export default function MusicPlayer() {
   }, [handlePrev])
 
   return (
-    <div className="relative w-full flex items-center justify-center">
+    
+    <div>
+      <button
+        onClick={() => setIsExpanded(false)}
+        className="absolute top-6 right-6 p-2 rounded-lg border border-gray-200 bg-white cursor-pointer 
+        hover:bg-[#FAFAFA] transition-colors">
+        <Shrink className="w-4 h-4" />
+      </button>
+
       <AnimatePresence mode="wait">
         <motion.div
           layout
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{
             opacity: 1,
-            scale: 1
+            scale: 1,
+            width: isExpanded ? 420 : 220       
           }}
           transition={{
             duration: 0.5,
@@ -212,8 +221,7 @@ export default function MusicPlayer() {
           className="relative flex-col py-1.5 pl-1.5 pr-2 items-center justify-between rounded-xl
           bg-[radial-gradient(85.03%_85.03%_at_50%_50%,_#585858_3.91%,_#7B7B7B_100%)]
           shadow-[0_7px_21px_0_rgba(0,0,0,0.30),0_-1.5px_0_0_#535252_inset,0_1px_0_0_#535252_inset,0_2px_0_0_#AFAFAF_inset]"
-          style={{ cursor: isExpanded ? "default" : "pointer" }}
-        >
+          style={{ cursor: isExpanded ? "default" : "pointer"}}>
           
           {/* Collapsed State */}
           {!isExpanded && (
@@ -249,7 +257,7 @@ export default function MusicPlayer() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 10 }}
                   transition={{ duration: 0.3 }}
-                  className="text-xl font-medium text-white/80 truncate"
+                  className="text-xl text-center font-medium text-white/80 truncate"
                 >
                   {currentSong.title}
                 </motion.h3>
@@ -270,7 +278,7 @@ export default function MusicPlayer() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, delay: 0.15 }}
-              className="flex flex-col p-2 gap-6"
+              className="flex items-center flex-col p-1.5 gap-6"
             >
               <motion.div
                 layout
@@ -279,7 +287,7 @@ export default function MusicPlayer() {
                   stiffness: 300,
                   damping: 30,
                 }}
-                className="flex items-center justify-between gap-2"
+                className="flex w-full items-center justify-between gap-2"
               >
                 <motion.div
                   layoutId="album-cover"
@@ -339,74 +347,71 @@ export default function MusicPlayer() {
               </motion.div>
 
               {/* Progress Bar */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-2">
-                  <span>{formatTime(currentTime)}</span>
-                  <span>{formatTime(duration)}</span>
-                </div>
-                <Slider.Root
+              <div className="w-full mt-1">
+              <Slider.Root
                   value={[currentTime]}
                   onValueChange={(value) => handleSeek(value[0])}
                   min={0}
                   max={duration || 0}
                   step={1}
                 >
-                  <Slider.Control className="flex w-full touch-none items-center py-3 select-none">
-                    <Slider.Track className="h-1 w-full rounded-full bg-gray-200 shadow-[inset_0_0_0_1px] shadow-gray-200 select-none">
-                      <Slider.Indicator className="rounded-full bg-gradient-to-r from-pink-500 to-red-500 select-none" />
-                      <Slider.Thumb className="size-3 rounded-full bg-white outline outline-2 outline-pink-500 shadow-lg select-none has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-pink-600 transition-transform hover:scale-110" />
+                  <Slider.Control className="flex w-full touch-none items-center mb-3 select-none">
+                    <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7] select-none">
+                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027] select-none" />
+                      <div className="">
+                        <Slider.Thumb className="size-3 rounded-full bg-white outline 
+                        outline-2 outline-pink-500 shadow-lg select-none has-[:focus-visible]:outline 
+                        has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-pink-600 transition-transform hover:scale-110" />
+                      </div>  
                     </Slider.Track>
                   </Slider.Control>
                 </Slider.Root>
-                
+                <div className="flex items-center justify-between text-sm tabular-nums font-medium text-[#A6A6A6]">
+                  <span className="select-none">{formatTime(currentTime)}</span>
+                  <span className="select-none">{formatTime(duration)}</span>
+                </div>
               </div>
 
               {/* Controls */}
-              <div className="flex items-center justify-center gap-6 mt-auto">
+              <div className="flex w-fit items-center p-3 rounded-full justify-center 
+              bg-[#7E7E7E] shadow-[0_1px_2px_0_#AFAFAF_inset] gap-12">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handlePrevWithAnimation}
-                  className="w-16 h-16 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <SkipBack size={24} className="text-gray-700" />
+                  className="group w-14 h-14 p-1.5 rounded-full bg-white border border-[#979797] cursor-pointer
+                  flex items-center justify-center shadow-lg hover:shadow-none transition-shadow duration-150 ease-out">
+                 <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                 bg-gradient-to-b from-[#D8D8D8] to [#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
+                  <StepBack size={24} className="text-[#979797] mr-0.5" />
+                 </motion.div>   
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={handlePlayPause}
-                  className="w-20 h-20 rounded-full bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center shadow-2xl hover:shadow-3xl transition-shadow"
-                >
+                  className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center 
+                  cursor-pointer shadow-md hover:shadow-none transition-shadow">
+                  <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                 bg-gradient-to-b from-[#D8D8D8] to [#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
                   {isPlaying ? (
-                    <Pause size={32} className="text-white" />
+                    <Pause fill="#979797" size={36} strokeWidth={0} />
                   ) : (
-                    <Play size={32} className="text-white ml-1" />
+                    <Play fill="#979797" size={36} strokeWidth={0} className="ml-1" />
                   )}
+                  </motion.div>
                 </motion.button>
 
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                  onClick={handleNextWithAnimation}
-                  className="w-16 h-16 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <SkipForward size={24} className="text-gray-700" />
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handlePrevWithAnimation}
+                  className="group w-14 h-14 p-1.5 rounded-full bg-white border border-[#979797] cursor-pointer
+                  flex items-center justify-center shadow-lg hover:shadow-none transition-shadow duration-150 ease-out">
+                 <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                 bg-gradient-to-b from-[#D8D8D8] to [#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
+                  <StepForward size={24} className="text-[#979797] ml-0.5"/>
+                 </motion.div>   
                 </motion.button>
               </div>
-
-              {/* Close Button */}
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                onClick={() => setIsExpanded(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-200/80 hover:bg-gray-300/80 flex items-center justify-center transition-colors"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </motion.button>
             </motion.div>
           )}
         </motion.div>

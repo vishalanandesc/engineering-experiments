@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, Loader, SquareArrowOutUpRight, RefreshCcw } from 'lucide-react';
+import { Check, Loader, SquareArrowOutUpRight, RotateCw } from 'lucide-react';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
@@ -45,7 +45,7 @@ export default function ActionButtons() {
         onClick={() => setIsOpen(false)}
         className="absolute top-6 right-6 p-2 rounded-lg border border-gray-200 bg-white cursor-pointer 
         hover:bg-[#FAFAFA] transition-colors">
-        <RefreshCcw className="w-4 h-4" />
+        <RotateCw className="w-4 h-4" />
       </button>
 
       <AnimatePresence mode="popLayout">
