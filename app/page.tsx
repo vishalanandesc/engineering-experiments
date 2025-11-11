@@ -9,7 +9,7 @@ import CanvasArea from './components/website-components/canvas-area';
 import Dropdown from './components/dropdown';
 import ActionButtons from './components/action-buttons';
 import TabNav from './components/tab-nav';
-import MusicPlayer from './components/music-player/player';
+import MusicPlayer from './components/player';
 
 
 

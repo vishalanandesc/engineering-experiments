@@ -218,7 +218,7 @@ export default function MusicPlayer() {
             mass: 1.2,
           }}
           onClick={() => !isExpanded && setIsExpanded(true)}
-          className="relative flex-col py-1.5 pl-1.5 pr-2 items-center justify-between rounded-xl
+          className="relative flex-col py-1.5 pl-1.5 pr-2 items-center justify-between rounded-xl 
           bg-[radial-gradient(85.03%_85.03%_at_50%_50%,_#585858_3.91%,_#7B7B7B_100%)]
           shadow-[0_7px_21px_0_rgba(0,0,0,0.30),0_-1.5px_0_0_#535252_inset,0_1px_0_0_#535252_inset,0_2px_0_0_#AFAFAF_inset]"
           style={{ cursor: isExpanded ? "default" : "pointer"}}>
@@ -250,22 +250,21 @@ export default function MusicPlayer() {
                 />
               </motion.div>
 
-              <motion.div layoutId="song-title" className="flex-1 min-w-0">
-                <motion.h3
-                  key={currentSong.id}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 10 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-xl text-center font-medium text-white/80 truncate"
-                >
-                  {currentSong.title}
-                </motion.h3>
-              </motion.div>
-
-              <motion.div layoutId="waveform" className="flex-shrink-0">
-                <WaveformIcon isPlaying={isPlaying} size="sm" />
-              </motion.div>
+                  <motion.h2
+                    layoutId="song-title"
+                    key={currentSong.id}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-xl text-center font-medium text-white/80 truncate"
+                  >
+                    {currentSong.title}
+                  </motion.h2>
+                   <motion.div layoutId="waveform" className="flex-shrink-0">
+                   <WaveformIcon isPlaying={isPlaying} size="sm" />
+                  </motion.div>
+                
             </motion.div>
           )}
 
@@ -317,19 +316,25 @@ export default function MusicPlayer() {
                     stiffness: 300,
                     damping: 30,
                   }}
-                  className="flex-1 min-w-0 flex flex-col justify-center"
-                >
+                  className="flex-1 flex-col justify-center"
+                > 
+                 <motion.div className="flex w-full items-center justify-between mb-1"> 
                   <motion.h2
                     layoutId="song-title"
                     key={currentSong.id}
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.4 }}
-                    className="text-2xl font-medium  text-white/80 truncate mb-1"
+                    transition={{ duration: 0.3 }}
+                    className="text-2xl text-center font-medium text-white/80 truncate"
                   >
                     {currentSong.title}
                   </motion.h2>
+                   <motion.div layoutId="waveform" className="flex-shrink-0">
+                   <WaveformIcon isPlaying={isPlaying} size="lg" />
+                  </motion.div>
+                 </motion.div> 
+
                   <motion.p
                     key={`${currentSong.id}-artist`}
                     initial={{ opacity: 0, y: 5 }}
@@ -341,9 +346,7 @@ export default function MusicPlayer() {
                     {currentSong.artist}
                   </motion.p>
                 </motion.div>
-                <motion.div layoutId="waveform" className="flex-shrink-0">
-                <WaveformIcon isPlaying={isPlaying} size="lg" />
-              </motion.div>
+               
               </motion.div>
 
               {/* Progress Bar */}
@@ -357,12 +360,12 @@ export default function MusicPlayer() {
                 >
                   <Slider.Control className="flex w-full touch-none items-center mb-3 select-none">
                     <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7] select-none">
-                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027] select-none" />
-                      <div className="">
-                        <Slider.Thumb className="size-3 rounded-full bg-white outline 
+                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027] select-none"/> 
+                        <Slider.Thumb className="pl-1">
+                          <div className="size-3 rounded-full bg-white outline 
                         outline-2 outline-pink-500 shadow-lg select-none has-[:focus-visible]:outline 
                         has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-pink-600 transition-transform hover:scale-110" />
-                      </div>  
+                        </Slider.Thumb>  
                     </Slider.Track>
                   </Slider.Control>
                 </Slider.Root>
@@ -387,19 +390,33 @@ export default function MusicPlayer() {
                 </motion.button>
 
                 <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  onClick={handlePlayPause}
-                  className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center 
-                  cursor-pointer shadow-md hover:shadow-none transition-shadow">
-                  <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
-                 bg-gradient-to-b from-[#D8D8D8] to [#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
-                  {isPlaying ? (
-                    <Pause fill="#979797" size={36} strokeWidth={0} />
-                  ) : (
-                    <Play fill="#979797" size={36} strokeWidth={0} className="ml-1" />
-                  )}
-                  </motion.div>
-                </motion.button>
+                whileTap={{ scale: 0.98 }}
+                onClick={handlePlayPause}
+                className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center 
+                cursor-pointer shadow-md hover:shadow-none transition-shadow">
+                <div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                  bg-gradient-to-b from-[#D8D8D8] to-[#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
+
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.div
+                      key={isPlaying ? "pause" : "play"}
+                      initial={{ opacity: 0, scale: 0.25, filter: "blur(10px)" }}
+                      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, scale: 0.25, filter: "blur(10px)" }}
+                      transition={{
+                        type: "spring",
+                        duration: 0.3,
+                        bounce: 0,
+                      }}>
+                      {isPlaying ? (
+                       <Pause fill="#979797" size={36} strokeWidth={0} />
+                      ) : (
+                        <Play fill="#979797" size={36} strokeWidth={0} className="ml-1" />
+                      )}
+                    </motion.div>
+                   </AnimatePresence>
+                  </div>
+              </motion.button>
 
                 <motion.button
                   whileTap={{ scale: 0.95 }}
@@ -424,9 +441,9 @@ export default function MusicPlayer() {
 // Waveform Animation Component
 // -----------------------------
 function WaveformIcon({ isPlaying, size = "sm" }: { isPlaying: boolean; size?: "sm" | "lg" }) {
-  const bars = size === "sm" ? 4 : 8
+  const bars = size === "sm" ? 4 : 6
   const barWidth = size === "sm" ? 2.5 : 3
-  const maxHeight = size === "sm" ? 20 : 32
+  const maxHeight = size === "sm" ? 20 : 28
   const gap = size === "sm" ? 3 : 4
 
   return (
