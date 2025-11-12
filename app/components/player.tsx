@@ -142,9 +142,14 @@ function useAudioPlayer(playlist: Track[]) {
 
   const handleSeek = useCallback((time: number) => {
     if (!audioRef.current) return
-    audioRef.current.currentTime = time
-    setCurrentTime(time)
+  
+    const safeTime = Number(time)
+    if (!isFinite(safeTime) || isNaN(safeTime)) return
+  
+    audioRef.current.currentTime = safeTime
+    setCurrentTime(safeTime)
   }, [])
+  
 
   return {
     isPlaying,
@@ -219,8 +224,8 @@ export default function MusicPlayer() {
           }}
           onClick={() => !isExpanded && setIsExpanded(true)}
           className="relative flex-col py-1.5 pl-1.5 pr-2 items-center justify-between rounded-xl 
-          bg-[radial-gradient(85.03%_85.03%_at_50%_50%,_#585858_3.91%,_#7B7B7B_100%)]
-          shadow-[0_7px_21px_0_rgba(0,0,0,0.30),0_-1.5px_0_0_#535252_inset,0_1px_0_0_#535252_inset,0_2px_0_0_#AFAFAF_inset]"
+          bg-[radial-gradient(85.03%_85.03%_at_50%_50%,_#585858_3.91%,_#7B7B7B_100%)] outline outline-offset-[-2px]
+          shadow-[0_7px_21px_0_rgba(0,0,0,0.30),0_-2px_0_0_#535252_inset,0_1px_0_0_#535252_inset,0_2px_0_0_#AFAFAF_inset]"
           style={{ cursor: isExpanded ? "default" : "pointer"}}>
           
           {/* Collapsed State */}
@@ -352,20 +357,19 @@ export default function MusicPlayer() {
               {/* Progress Bar */}
               <div className="w-full mt-1">
               <Slider.Root
-                  value={[currentTime]}
-                  onValueChange={(value) => handleSeek(value[0])}
-                  min={0}
-                  max={duration || 0}
-                  step={1}
-                >
+                 value={[isFinite(currentTime) ? currentTime : 0]}
+                 onValueChange={(value) => {
+                   const seekTime = Array.isArray(value) ? Number(value[0]) : Number(value)
+                   if (isFinite(seekTime) && !isNaN(seekTime)) handleSeek(seekTime)
+                 }}
+                 min={0}
+                 max={isFinite(duration) && duration > 0 ? duration : 0}
+                 step={1}>
                   <Slider.Control className="flex w-full touch-none items-center mb-3 select-none">
-                    <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7] select-none">
-                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027] select-none"/> 
-                        <Slider.Thumb className="pl-1">
-                          <div className="size-3 rounded-full bg-white outline 
-                        outline-2 outline-pink-500 shadow-lg select-none has-[:focus-visible]:outline 
-                        has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-pink-600 transition-transform hover:scale-110" />
-                        </Slider.Thumb>  
+                    <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7]">
+                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027]"/> 
+                        <Slider.Thumb className="w-1.5 h-3.5 rounded-full bg-white shadow-lg
+                        has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#A80027] has-[:focus-visible]:outline-offset-2 transition-transform hover:scale-110"/>
                     </Slider.Track>
                   </Slider.Control>
                 </Slider.Root>
