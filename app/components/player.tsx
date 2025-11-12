@@ -28,24 +28,24 @@ const playlist: Track[] = [
     title: "Wishes",
     artist: "Hasan Raheem, Talwiinder & Umair",
     cover: "/player-assets/cover/wishes-cover.png",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-    duration: 180,
+    audioUrl: "/player-assets/audio/wishes.mp3",
+    duration: 218,
   },
   {
     id: 2,
     title: "Victory Lap",
     artist: "Fred again.., Skepta & PlaqueBoyMax",
     cover: "/player-assets/cover/victorylap-cover.png",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-    duration: 195,
+    audioUrl: "/player-assets/audio/victorylap.mp3",
+    duration: 165,
   },
   {
     id: 3,
     title: "DNA",
     artist: "Kendrick Lamar",
     cover: "/player-assets/cover/dna-cover.png",
-    audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-    duration: 210,
+    audioUrl: "/player-assets/audio/dna.mp3",
+    duration: 185,
   },
 ]
 
@@ -96,7 +96,20 @@ function useAudioPlayer(playlist: Track[]) {
 
     const handleTimeUpdate = () => setCurrentTime(Math.floor(audio.currentTime))
     const handleLoadedMetadata = () => setDuration(Math.floor(audio.duration))
-    const handleEnded = () => handleNext()
+    const handleEnded = () => {
+      setCurrentSongIndex((prev) => {
+        const nextIndex = (prev + 1) % playlist.length
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.src = playlist[nextIndex].audioUrl
+            audioRef.current.load()
+            audioRef.current.play().catch((err) => console.error("Playback failed:", err))
+          }
+        }, 50)
+        return nextIndex
+      })
+      setCurrentTime(0)
+    }
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
 
@@ -364,11 +377,12 @@ export default function MusicPlayer() {
                  min={0}
                  max={isFinite(duration) && duration > 0 ? duration : 0}
                  step={1}>
-                  <Slider.Control className="flex w-full touch-none items-center mb-3 select-none">
+                  <Slider.Control className="flex w-full touch-none items-center mb-3 select-none cursor-pointer">
                     <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7]">
                       <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027]"/> 
-                        <Slider.Thumb className="w-1.5 h-3.5 rounded-full bg-white shadow-lg
-                        has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#A80027] has-[:focus-visible]:outline-offset-2 transition-transform hover:scale-110"/>
+                        <Slider.Thumb className="w-1.5 h-3.5 rounded-full bg-white shadow-lg 
+                        has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#A80027] 
+                        has-[:focus-visible]:outline-offset-2 transition-transform hover:scale-110"/>
                     </Slider.Track>
                   </Slider.Control>
                 </Slider.Root>
