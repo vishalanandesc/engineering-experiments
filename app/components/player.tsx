@@ -26,24 +26,24 @@ const playlist: Track[] = [
   {
     id: 1,
     title: "Wishes",
-    artist: "Hasan Raheem, Talwiinder, Umair",
+    artist: "Hasan Raheem, Talwiinder & Umair",
     cover: "/player-assets/cover/wishes-cover.png",
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
     duration: 180,
   },
   {
     id: 2,
-    title: "Midnight Dreams",
-    artist: "The Weeknd, Travis Scott",
-    cover: "/midnight-music-album-cover.jpg",
+    title: "Victory Lap",
+    artist: "Fred again.., Skepta & PlaqueBoyMax",
+    cover: "/player-assets/cover/victorylap-cover.png",
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
     duration: 195,
   },
   {
     id: 3,
-    title: "Summer Vibes",
-    artist: "Calvin Harris, Dua Lipa",
-    cover: "/summer-vibes-music-album.jpg",
+    title: "DNA",
+    artist: "Kendrick Lamar",
+    cover: "/player-assets/cover/dna-cover.png",
     audioUrl: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
     duration: 210,
   },
@@ -128,8 +128,8 @@ function useAudioPlayer(playlist: Track[]) {
   const handleNext = useCallback(() => {
     setCurrentSongIndex((prev) => (prev + 1) % playlist.length)
     setCurrentTime(0)
-  }, [playlist.length])
-
+  }, [playlist]) 
+  
   const handlePrev = useCallback(() => {
     if (currentTime > 3) {
       if (audioRef.current) audioRef.current.currentTime = 0
@@ -138,7 +138,8 @@ function useAudioPlayer(playlist: Track[]) {
       setCurrentSongIndex((prev) => (prev - 1 + playlist.length) % playlist.length)
       setCurrentTime(0)
     }
-  }, [playlist.length, currentTime])
+  }, [playlist, currentTime])
+  
 
   const handleSeek = useCallback((time: number) => {
     if (!audioRef.current) return
@@ -171,8 +172,6 @@ export default function MusicPlayer() {
   const [isChangingSong, setIsChangingSong] = useState(false)
   const { isPlaying, currentSong, currentTime, duration, handlePlayPause, handleNext, handlePrev, handleSeek } =
     useAudioPlayer(playlist)
-
-  const progress = duration ? (currentTime / duration) * 100 : 0
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60)
@@ -424,7 +423,7 @@ export default function MusicPlayer() {
 
                 <motion.button
                   whileTap={{ scale: 0.95 }}
-                  onClick={handlePrevWithAnimation}
+                  onClick={handleNextWithAnimation}
                   className="group w-14 h-14 p-1.5 rounded-full bg-white border border-[#979797] cursor-pointer
                   flex items-center justify-center shadow-lg hover:shadow-none transition-shadow duration-150 ease-out">
                  <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
