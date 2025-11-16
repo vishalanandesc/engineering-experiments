@@ -139,7 +139,17 @@ function useAudioPlayer(playlist: Track[]) {
   }, [isPlaying])
 
   const handleNext = useCallback(() => {
-    setCurrentSongIndex((prev) => (prev + 1) % playlist.length)
+    setCurrentSongIndex((prev) => {
+      const nextIndex = (prev + 1) % playlist.length
+      setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.src = playlist[nextIndex].audioUrl
+          audioRef.current.load()
+          audioRef.current.play().catch((err) => console.error("Playback failed:", err))
+        }
+      }, 50)
+      return nextIndex
+    })
     setCurrentTime(0)
   }, [playlist]) 
   
@@ -148,7 +158,17 @@ function useAudioPlayer(playlist: Track[]) {
       if (audioRef.current) audioRef.current.currentTime = 0
       setCurrentTime(0)
     } else {
-      setCurrentSongIndex((prev) => (prev - 1 + playlist.length) % playlist.length)
+      setCurrentSongIndex((prev) => {
+        const nextIndex = (prev - 1 + playlist.length) % playlist.length
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.src = playlist[nextIndex].audioUrl
+            audioRef.current.load()
+            audioRef.current.play().catch((err) => console.error("Playback failed:", err))
+          }
+        }, 50)
+        return nextIndex
+      })
       setCurrentTime(0)
     }
   }, [playlist, currentTime])
