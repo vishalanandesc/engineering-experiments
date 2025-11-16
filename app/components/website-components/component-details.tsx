@@ -16,7 +16,7 @@ export default function ComponentDetails({
       <h2 className="text-base text-primary font-medium">
         {title}
       </h2>
-      <p className="text-sm text-secondary font-medium">
+      <p className="text-sm text-secondary font-medium ">
         {description}
       </p>
     </div>

@@ -26,7 +26,7 @@ const playlist: Track[] = [
   {
     id: 1,
     title: "Wishes",
-    artist: "Hasan Raheem, Talwiinder & Umair",
+    artist: "Talwinder",
     cover: "/player-assets/cover/wishes-cover.png",
     audioUrl: "/player-assets/audio/wishes.mp3",
     duration: 218,
@@ -34,7 +34,7 @@ const playlist: Track[] = [
   {
     id: 2,
     title: "Victory Lap",
-    artist: "Fred again.., Skepta & PlaqueBoyMax",
+    artist: "Fred Again",
     cover: "/player-assets/cover/victorylap-cover.png",
     audioUrl: "/player-assets/audio/victorylap.mp3",
     duration: 165,
@@ -192,7 +192,10 @@ export default function MusicPlayer() {
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
   }
 
+  const [direction, setDirection] = useState<"left" | "right">("right")
+
   const handleNextWithAnimation = useCallback(() => {
+    setDirection("right")
     setIsChangingSong(true)
     setTimeout(() => {
       handleNext()
@@ -201,6 +204,7 @@ export default function MusicPlayer() {
   }, [handleNext])
 
   const handlePrevWithAnimation = useCallback(() => {
+    setDirection("left")
     setIsChangingSong(true)
     setTimeout(() => {
       handlePrev()
@@ -257,10 +261,6 @@ export default function MusicPlayer() {
               >
                 <motion.img
                   key={currentSong.id}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.3 }}
                   src={currentSong.cover || "/placeholder.svg"}
                   alt={currentSong.title}
                   className="w-full h-full object-center rounded-sm border-[.5px] border-[#A0A0A0]"
@@ -270,10 +270,6 @@ export default function MusicPlayer() {
                   <motion.h2
                     layoutId="song-title"
                     key={currentSong.id}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.3 }}
                     className="text-xl text-center font-medium text-white/80 truncate"
                   >
                     {currentSong.title}
@@ -293,32 +289,26 @@ export default function MusicPlayer() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, delay: 0.15 }}
+              transition={{ duration: 0.2, delay: 0.30 }}
               className="flex items-center flex-col p-1.5 gap-6"
             >
               <motion.div
-                layout
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 30,
-                }}
-                className="flex w-full items-center justify-between gap-2"
-              >
+               
+                className="flex w-full items-center justify-between gap-2">
                 <motion.div
                   layoutId="album-cover"
                   className="w-20 h-20 rounded-xl p-[2.5px] bg-[#7E7E7E] overflow-clip shadow-lg border-[.5px] border-[#9D9D9D]"
                 >
                   <motion.img
                     key={currentSong.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.75, x: direction === "right" ? 60 : -60, filter: "blur(4px)"}}
+                    animate={{ opacity: 1, scale: 1, x: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, scale: 0.75, x: direction === "right" ? -60 : 60, filter: "blur(4px)" }}
                     transition={{
-                      duration: 0.4,
+                      duration: 0.3,
                       type: "spring",
-                      stiffness: 300,
-                      damping: 30,
+                      stiffness: 500,
+                      damping: 45,
                     }}
                     src={currentSong.cover || "/placeholder.svg"}
                     alt={currentSong.title}
@@ -326,23 +316,17 @@ export default function MusicPlayer() {
                   />
                 </motion.div>
 
-                <motion.div
-                  layout
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30,
-                  }}
-                  className="flex-1 flex-col justify-center"
-                > 
+                <motion.div className="flex-1 flex-col justify-center"> 
                  <motion.div className="flex w-full items-center justify-between mb-1"> 
                   <motion.h2
-                    layoutId="song-title"
                     key={currentSong.id}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ opacity: 0, y: 5, x: direction === "right" ? 40 : -40, filter: "blur(4px)"}}
+                    animate={{ opacity: 1, y: 0 , x: 0, filter: "blur(0px)"}}
+                    exit={{ opacity: 0, y: -5, x: direction === "right" ? 40 : -40, filter: "blur(4px)"}}
+                    transition={{ 
+                      duration: 0.3,
+                      ease: "easeOut"
+                    }}
                     className="text-2xl text-center font-medium text-white/80 truncate"
                   >
                     {currentSong.title}
@@ -354,10 +338,16 @@ export default function MusicPlayer() {
 
                   <motion.p
                     key={`${currentSong.id}-artist`}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -5 }}
-                    transition={{ delay: 0.05, duration: 0.3 }}
+                    initial={{ opacity: 0, y: 5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, x: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
+                    transition={{ 
+                      duration: 0.3,
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 45,
+                      delay: 0.1
+                    }}
                     className="text-lg text-white/60 truncate"
                   >
                     {currentSong.artist}
@@ -380,7 +370,7 @@ export default function MusicPlayer() {
                   <Slider.Control className="flex w-full touch-none items-center mb-3 select-none cursor-pointer">
                     <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7]">
                       <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027]"/> 
-                        <Slider.Thumb className="w-1.5 h-3.5 rounded-full bg-white shadow-lg 
+                        <Slider.Thumb className="w-2 h-2 rounded-full bg-[#DD2E57] shadow-[0_0_0_4px_#FFFFFF] outline-2 outline-offset-[4px]
                         has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#A80027] 
                         has-[:focus-visible]:outline-offset-2 transition-transform hover:scale-110"/>
                     </Slider.Track>
@@ -409,7 +399,7 @@ export default function MusicPlayer() {
                 <motion.button
                 whileTap={{ scale: 0.98 }}
                 onClick={handlePlayPause}
-                className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center 
+                className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center border border-[#979797]
                 cursor-pointer shadow-md hover:shadow-none transition-shadow">
                 <div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
                   bg-gradient-to-b from-[#D8D8D8] to-[#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">

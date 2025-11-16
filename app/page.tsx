@@ -23,6 +23,17 @@ export default function Home() {
           author="VISHAL ANAND" 
         />
 
+      <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
+       <CanvasArea>
+         <MusicPlayer/>
+       </CanvasArea>
+
+       <ComponentDetails 
+        title="Music Player" 
+        description="Layout animation based music player, built with a lot of shadows & react motion."
+        />
+     </div>   
+
      <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
        <CanvasArea overflow="visible">
          <Dropdown width="400px"/>
@@ -56,23 +67,6 @@ export default function Home() {
         />
      </div>  
 
-     <div className="w-full px-4 py-5 md:px-6 md:py-8 flex flex-col gap-4 md:gap-6" style={dashedBorder("b", "#CBCBCB", 1)}> 
-       <CanvasArea>
-         <MusicPlayer/>
-       </CanvasArea>
-
-       <ComponentDetails 
-        title="Music Player" 
-        description="A nice little desc."
-        />
-     </div> 
-
-     
-
-  
-     
-    
-    
     </main>
   );
 }
