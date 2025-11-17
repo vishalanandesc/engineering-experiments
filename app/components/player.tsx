@@ -259,10 +259,10 @@ export default function MusicPlayer() {
             mass: 1.2,
           }}
           onClick={() => !isExpanded && setIsExpanded(true)}
-          className="relative flex-col py-1.5 pl-1.5 pr-2 items-center justify-between rounded-xl 
+          className="relative flex-col py-1.5 pl-1.5 pr-2 items-center justify-between rounded-xl squircle 
           bg-[radial-gradient(85.03%_85.03%_at_50%_50%,_#585858_3.91%,_#7B7B7B_100%)] outline outline-offset-[-2px]
           shadow-[0_7px_21px_0_rgba(0,0,0,0.30),0_-2px_0_0_#535252_inset,0_1px_0_0_#535252_inset,0_2px_0_0_#AFAFAF_inset]"
-          style={{ cursor: isExpanded ? "default" : "pointer"}}>
+          style={{ '--squircle-radius': '24px' } as React.CSSProperties}>
           
           {/* Collapsed State */}
           {!isExpanded && (
@@ -273,18 +273,18 @@ export default function MusicPlayer() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative flex gap-6 w-full items-center justify-between"
+              className="relative flex gap-6 w-full items-center justify-between cursor-pointer"
             >
               <motion.div
                 layoutId="album-cover"
-                className="w-9 h-9 rounded-md p-[1px] bg-[#7E7E7E] overflow-clip shadow-lg border-[.25px] border-[#9D9D9D]"
-              >
+                className="w-9 h-9 rounded-md p-[1px] bg-[#7E7E7E] overflow-clip shadow-lg border-[.25px] border-[#9D9D9D] squircle"
+                style={{ '--squircle-radius': '18px' } as React.CSSProperties}>
                 <motion.img
                   key={currentSong.id}
                   src={currentSong.cover || "/placeholder.svg"}
                   alt={currentSong.title}
-                  className="w-full h-full object-center rounded-sm border-[.5px] border-[#A0A0A0]"
-                />
+                  className="w-full h-full object-center rounded-sm border-[.5px] border-[#A0A0A0] squircle"
+                  style={{ '--squircle-radius': '16px' } as React.CSSProperties}/>
               </motion.div>
 
                   <motion.h2
@@ -317,8 +317,8 @@ export default function MusicPlayer() {
                 className="flex w-full items-center justify-between gap-2">
                 <motion.div
                   layoutId="album-cover"
-                  className="w-20 h-20 rounded-xl p-[2.5px] bg-[#7E7E7E] overflow-clip shadow-lg border-[.5px] border-[#9D9D9D]"
-                >
+                  className="w-20 h-20 rounded-xl p-[2px] bg-[#7E7E7E] overflow-clip shadow-lg border-[.5px] border-[#9D9D9D] squircle"
+                  style={{ '--squircle-radius': '24px' } as React.CSSProperties}>
                   <motion.img
                     key={currentSong.id}
                     initial={{ opacity: 0, scale: 0.75, x: direction === "right" ? 60 : -60, filter: "blur(4px)"}}
@@ -332,8 +332,8 @@ export default function MusicPlayer() {
                     }}
                     src={currentSong.cover || "/placeholder.svg"}
                     alt={currentSong.title}
-                    className="w-full h-full object-center rounded-lg border-[1px] border-[#A0A0A0]"
-                  />
+                    className="w-full h-full object-center rounded-lg border-[1px] border-[#A0A0A0] squircle"
+                    style={{ '--squircle-radius': '20px' } as React.CSSProperties}/>
                 </motion.div>
 
                 <motion.div className="flex-1 flex-col justify-center"> 
