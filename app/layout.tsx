@@ -5,7 +5,7 @@ import './globals.css';
 export const metadata: Metadata = {
   title: "Engineering Experiments",
   description: "This project is a public documentaion of me experimenting with design engineering.",
-  
+
   icons: {
     icon: '/favicon.png',
     shortcut: '/favicon.png',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: "This project is a public documentaion of me experimenting with design engineering.",
     images: '/opengraph.png',
   }
- 
+
 };
 
 export default function AppLayout({
@@ -33,7 +33,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="w-full flex items-center px-4 md:px-0 mx-auto">
         {children}
         <Analytics />

@@ -151,8 +151,8 @@ function useAudioPlayer(playlist: Track[]) {
       return nextIndex
     })
     setCurrentTime(0)
-  }, [playlist]) 
-  
+  }, [playlist])
+
   const handlePrev = useCallback(() => {
     if (currentTime > 3) {
       if (audioRef.current) audioRef.current.currentTime = 0
@@ -172,18 +172,18 @@ function useAudioPlayer(playlist: Track[]) {
       setCurrentTime(0)
     }
   }, [playlist, currentTime])
-  
+
 
   const handleSeek = useCallback((time: number) => {
     if (!audioRef.current) return
-  
+
     const safeTime = Number(time)
     if (!isFinite(safeTime) || isNaN(safeTime)) return
-  
+
     audioRef.current.currentTime = safeTime
     setCurrentTime(safeTime)
   }, [])
-  
+
 
   return {
     isPlaying,
@@ -232,8 +232,35 @@ export default function MusicPlayer() {
     }, 200)
   }, [handlePrev])
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Global toggle
+      if (e.code === "KeyM") {
+        setIsExpanded((prev) => !prev)
+        return
+      }
+
+      // Interactions only when expanded
+      if (isExpanded) {
+        if (e.code === "Escape") {
+          setIsExpanded(false)
+        } else if (e.code === "Space") {
+          e.preventDefault() // Prevent scrolling
+          handlePlayPause()
+        } else if (e.code === "ArrowRight") {
+          handleNextWithAnimation()
+        } else if (e.code === "ArrowLeft") {
+          handlePrevWithAnimation()
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isExpanded, handlePlayPause, handleNextWithAnimation, handlePrevWithAnimation])
+
   return (
-    
+
     <div>
       <button
         onClick={() => setIsExpanded(false)}
@@ -249,7 +276,7 @@ export default function MusicPlayer() {
           animate={{
             opacity: 1,
             scale: 1,
-            width: isExpanded ? 420 : 220       
+            width: isExpanded ? 420 : 220
           }}
           transition={{
             duration: 0.5,
@@ -263,7 +290,7 @@ export default function MusicPlayer() {
           bg-[radial-gradient(85.03%_85.03%_at_50%_50%,_#585858_3.91%,_#7B7B7B_100%)] outline outline-offset-[-2px]
           shadow-[0_7px_21px_0_rgba(0,0,0,0.30),0_-2px_0_0_#535252_inset,0_1px_0_0_#535252_inset,0_2px_0_0_#AFAFAF_inset]"
           style={{ '--squircle-radius': '24px' } as React.CSSProperties}>
-          
+
           {/* Collapsed State */}
           {!isExpanded && (
             <motion.div
@@ -284,20 +311,20 @@ export default function MusicPlayer() {
                   src={currentSong.cover || "/placeholder.svg"}
                   alt={currentSong.title}
                   className="w-full h-full object-center rounded-sm border-[.5px] border-[#A0A0A0] squircle"
-                  style={{ '--squircle-radius': '16px' } as React.CSSProperties}/>
+                  style={{ '--squircle-radius': '16px' } as React.CSSProperties} />
               </motion.div>
 
-                  <motion.h2
-                    layoutId="song-title"
-                    key={currentSong.id}
-                    className="text-xl text-center font-medium text-white/80 truncate"
-                  >
-                    {currentSong.title}
-                  </motion.h2>
-                   <motion.div layoutId="waveform" className="flex-shrink-0">
-                   <WaveformIcon isPlaying={isPlaying} size="sm" />
-                  </motion.div>
-                
+              <motion.h2
+                layoutId="song-title"
+                key={currentSong.id}
+                className="text-xl text-center font-medium text-white/80 truncate"
+              >
+                {currentSong.title}
+              </motion.h2>
+              <motion.div layoutId="waveform" className="flex-shrink-0">
+                <WaveformIcon isPlaying={isPlaying} size="sm" />
+              </motion.div>
+
             </motion.div>
           )}
 
@@ -313,7 +340,7 @@ export default function MusicPlayer() {
               className="flex items-center flex-col p-1.5 gap-6"
             >
               <motion.div
-               
+
                 className="flex w-full items-center justify-between gap-2">
                 <motion.div
                   layoutId="album-cover"
@@ -321,7 +348,7 @@ export default function MusicPlayer() {
                   style={{ '--squircle-radius': '24px' } as React.CSSProperties}>
                   <motion.img
                     key={currentSong.id}
-                    initial={{ opacity: 0, scale: 0.75, x: direction === "right" ? 60 : -60, filter: "blur(4px)"}}
+                    initial={{ opacity: 0, scale: 0.75, x: direction === "right" ? 60 : -60, filter: "blur(4px)" }}
                     animate={{ opacity: 1, scale: 1, x: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, scale: 0.75, x: direction === "right" ? -60 : 60, filter: "blur(4px)" }}
                     transition={{
@@ -333,35 +360,35 @@ export default function MusicPlayer() {
                     src={currentSong.cover || "/placeholder.svg"}
                     alt={currentSong.title}
                     className="w-full h-full object-center rounded-lg border-[1px] border-[#A0A0A0] squircle"
-                    style={{ '--squircle-radius': '20px' } as React.CSSProperties}/>
+                    style={{ '--squircle-radius': '20px' } as React.CSSProperties} />
                 </motion.div>
 
-                <motion.div className="flex-1 flex-col justify-center"> 
-                 <motion.div className="flex w-full items-center justify-between mb-1"> 
-                  <motion.h2
-                    key={currentSong.id}
-                    initial={{ opacity: 0, y: 5, x: direction === "right" ? 40 : -40, filter: "blur(4px)"}}
-                    animate={{ opacity: 1, y: 0 , x: 0, filter: "blur(0px)"}}
-                    exit={{ opacity: 0, y: -5, x: direction === "right" ? 40 : -40, filter: "blur(4px)"}}
-                    transition={{ 
-                      duration: 0.3,
-                      ease: "easeOut"
-                    }}
-                    className="text-2xl text-center font-medium text-white/80 truncate"
-                  >
-                    {currentSong.title}
-                  </motion.h2>
-                   <motion.div layoutId="waveform" className="flex-shrink-0">
-                   <WaveformIcon isPlaying={isPlaying} size="lg" />
+                <motion.div className="flex-1 flex-col justify-center">
+                  <motion.div className="flex w-full items-center justify-between mb-1">
+                    <motion.h2
+                      key={currentSong.id}
+                      initial={{ opacity: 0, y: 5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, x: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeOut"
+                      }}
+                      className="text-2xl text-center font-medium text-white/80 truncate"
+                    >
+                      {currentSong.title}
+                    </motion.h2>
+                    <motion.div layoutId="waveform" className="flex-shrink-0">
+                      <WaveformIcon isPlaying={isPlaying} size="lg" />
+                    </motion.div>
                   </motion.div>
-                 </motion.div> 
 
                   <motion.p
                     key={`${currentSong.id}-artist`}
                     initial={{ opacity: 0, y: 5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
                     animate={{ opacity: 1, y: 0, x: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, y: -5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
-                    transition={{ 
+                    transition={{
                       duration: 0.3,
                       type: "spring",
                       stiffness: 500,
@@ -373,24 +400,24 @@ export default function MusicPlayer() {
                     {currentSong.artist}
                   </motion.p>
                 </motion.div>
-               
+
               </motion.div>
 
               {/* Progress Bar */}
               <div className="w-full mt-1">
-              <Slider.Root
-                 value={[isFinite(currentTime) ? currentTime : 0]}
-                 onValueChange={(value) => {
-                   const seekTime = Array.isArray(value) ? Number(value[0]) : Number(value)
-                   if (isFinite(seekTime) && !isNaN(seekTime)) handleSeek(seekTime)
-                 }}
-                 min={0}
-                 max={isFinite(duration) && duration > 0 ? duration : 0}
-                 step={1}>
+                <Slider.Root
+                  value={[isFinite(currentTime) ? currentTime : 0]}
+                  onValueChange={(value) => {
+                    const seekTime = Array.isArray(value) ? Number(value[0]) : Number(value)
+                    if (isFinite(seekTime) && !isNaN(seekTime)) handleSeek(seekTime)
+                  }}
+                  min={0}
+                  max={isFinite(duration) && duration > 0 ? duration : 0}
+                  step={1}>
                   <Slider.Control className="flex w-full touch-none items-center mb-3 select-none cursor-pointer">
                     <Slider.Track className="h-2 w-full rounded-full bg-[#E5E5E5] shadow-[inset_0_2px_9px_0_#B9B7B7]">
-                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027]"/> 
-                        <Slider.Thumb className="w-2 h-2 rounded-full bg-[#DD2E57] shadow-[0_0_0_4px_#FFFFFF] outline-2 outline-offset-[4px]
+                      <Slider.Indicator className="rounded-full bg-gradient-to-b from-[#FF4B76] to-[#A80027]" />
+                      <Slider.Thumb className="w-2 h-2 rounded-full bg-[#DD2E57] shadow-[0_0_0_4px_#FFFFFF] outline-2 outline-offset-[4px]
                         has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-[#A80027] 
                         has-[:focus-visible]:outline-offset-2 transition-transform hover:scale-110"/>
                     </Slider.Track>
@@ -410,50 +437,50 @@ export default function MusicPlayer() {
                   onClick={handlePrevWithAnimation}
                   className="group w-14 h-14 p-1.5 rounded-full bg-white border border-[#979797] cursor-pointer
                   flex items-center justify-center shadow-lg hover:shadow-none transition-shadow duration-150 ease-out">
-                 <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                  <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
                  bg-gradient-to-b from-[#D8D8D8] to [#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
-                  <StepBack size={24} className="text-[#979797] mr-0.5" />
-                 </motion.div>   
+                    <StepBack size={24} className="text-[#979797] mr-0.5" />
+                  </motion.div>
                 </motion.button>
 
                 <motion.button
-                whileTap={{ scale: 0.98 }}
-                onClick={handlePlayPause}
-                className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center border border-[#979797]
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handlePlayPause}
+                  className="group w-20 h-20 p-2 rounded-full bg-white flex items-center justify-center border border-[#979797]
                 cursor-pointer shadow-md hover:shadow-none transition-shadow">
-                <div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                  <div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
                   bg-gradient-to-b from-[#D8D8D8] to-[#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
 
-                  <AnimatePresence mode="popLayout" initial={false}>
-                    <motion.div
-                      key={isPlaying ? "pause" : "play"}
-                      initial={{ opacity: 0, scale: 0.25, filter: "blur(10px)" }}
-                      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, scale: 0.25, filter: "blur(10px)" }}
-                      transition={{
-                        type: "spring",
-                        duration: 0.3,
-                        bounce: 0,
-                      }}>
-                      {isPlaying ? (
-                       <Pause fill="#979797" size={36} strokeWidth={0} />
-                      ) : (
-                        <Play fill="#979797" size={36} strokeWidth={0} className="ml-1" />
-                      )}
-                    </motion.div>
-                   </AnimatePresence>
+                    <AnimatePresence mode="popLayout" initial={false}>
+                      <motion.div
+                        key={isPlaying ? "pause" : "play"}
+                        initial={{ opacity: 0, scale: 0.25, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, scale: 0.25, filter: "blur(10px)" }}
+                        transition={{
+                          type: "spring",
+                          duration: 0.3,
+                          bounce: 0,
+                        }}>
+                        {isPlaying ? (
+                          <Pause fill="#979797" size={36} strokeWidth={0} />
+                        ) : (
+                          <Play fill="#979797" size={36} strokeWidth={0} className="ml-1" />
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
                   </div>
-              </motion.button>
+                </motion.button>
 
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={handleNextWithAnimation}
                   className="group w-14 h-14 p-1.5 rounded-full bg-white border border-[#979797] cursor-pointer
                   flex items-center justify-center shadow-lg hover:shadow-none transition-shadow duration-150 ease-out">
-                 <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
+                  <motion.div className="flex w-full h-full items-center justify-center rounded-full border-[.5px] border-[#C7C6C6]
                  bg-gradient-to-b from-[#D8D8D8] to [#F3F3F3] group-hover:bg-[#F3F3F3] group-hover:border-none transition-all duration-150 ease-out">
-                  <StepForward size={24} className="text-[#979797] ml-0.5"/>
-                 </motion.div>   
+                    <StepForward size={24} className="text-[#979797] ml-0.5" />
+                  </motion.div>
                 </motion.button>
               </div>
             </motion.div>
@@ -513,8 +540,8 @@ function WaveBar({
   }, [isPlaying, controls, maxHeight, delay])
 
   return (
-    <motion.div animate={controls} style={{ width, height: maxHeight * 0.3 }} 
-    className="bg-white rounded-full
+    <motion.div animate={controls} style={{ width, height: maxHeight * 0.3 }}
+      className="bg-white rounded-full
     shadow-[0_1px_2px_0_#8A8A8A_inset]" />
   )
 }
