@@ -29,7 +29,7 @@ export default function Home() {
        </CanvasArea>
 
        <ComponentDetails 
-        title="Music Player" 
+        title="Music Player -- use 'M' to expand/collapse" 
         description="Layout animation based music player, built with a lot of shadows & react motion."
         />
      </div>   

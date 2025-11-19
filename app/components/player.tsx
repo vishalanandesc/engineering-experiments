@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react"
 import { motion, AnimatePresence, useAnimationControls } from "motion/react"
-import { Play, Pause, StepBack, StepForward, Shrink } from "lucide-react"
+import { Play, Pause, StepBack, StepForward, Shrink, Expand } from "lucide-react"
 import { Slider } from "@base-ui-components/react/slider"
 
 
@@ -263,10 +263,10 @@ export default function MusicPlayer() {
 
     <div>
       <button
-        onClick={() => setIsExpanded(false)}
+        onClick={() => setIsExpanded((prev) => !prev)}
         className="absolute top-6 right-6 p-2 rounded-lg border border-gray-200 bg-white cursor-pointer 
         hover:bg-[#FAFAFA] transition-colors">
-        <Shrink className="w-4 h-4" />
+        {isExpanded ? <Shrink className="w-4 h-4" /> : <Expand className="w-4 h-4" />}
       </button>
 
       <AnimatePresence mode="wait">
