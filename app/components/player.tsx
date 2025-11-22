@@ -367,9 +367,9 @@ export default function MusicPlayer() {
                   <motion.div className="flex w-full items-center justify-between mb-1">
                     <motion.h2
                       key={currentSong.id}
-                      initial={{ opacity: 0, y: 5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
+                      initial={{ opacity: 0, y: 5, x: direction === "right" ? 5 : -5, filter: "blur(2px)" }}
                       animate={{ opacity: 1, y: 0, x: 0, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, y: -5, x: direction === "right" ? 40 : -40, filter: "blur(4px)" }}
+                      exit={{ opacity: 0, y: -5, x: direction === "right" ? 5 : -5, filter: "blur(2px)" }}
                       transition={{
                         duration: 0.3,
                         ease: "easeOut"
